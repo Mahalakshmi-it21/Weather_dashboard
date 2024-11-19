@@ -7,15 +7,20 @@ function App() {
 
   const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&units=imperial&appid=895284fb2d2c50a520ea537456963d9c`
 
-  const searchLocation = (event) => {
-    if (event.key === 'Enter') {
-      axios.get(url).then((response) => {
-        setData(response.data)
-        console.log(response.data)
-      })
-      setLocation('')
+ const searchLocation = async (event) => {
+  if (event.key === 'Enter') {
+    try {
+      const response = await axios.get(url);
+      setData(response.data);
+      console.log(response.data);
+      setLocation('');
+    } catch (error) {
+      console.error(error); // Log the error for debugging
+      alert("City not found. Please enter a valid location."); // User-friendly error message
     }
   }
+};
+
 
   return (
     <div className="app">
